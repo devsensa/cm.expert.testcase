@@ -8,11 +8,22 @@ class FileUploadingQueue {
       : _fileAddLimit = fileAddLimit,
         _concurrentUploadingLimit = concurrentUploadingLimit;
 
+/* --------------------------------- Getters -------------------------------- */
+  int get fileAddLimit {
+    return _fileAddLimit;
+  }
+
+  int get concurrentUploadingLimit {
+    return _concurrentUploadingLimit;
+  }
+
   Stream<bool> empty() {}
   Stream<bool> uploading() {}
   Stream<UploadingState> uploadingState() {}
   Stream<bool> canAddFile() {}
   Stream<List<UploadingProcess>> processes() {}
+
+/* ------------------------------- Operations ------------------------------- */
 
   Future<void> cancel() async {}
   Future<void> save() async {}
