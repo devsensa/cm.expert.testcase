@@ -1,6 +1,13 @@
 import "dart:async";
 
 class FileUploadingQueue {
+  int _fileAddLimit;
+  int _concurrentUploadingLimit;
+
+  FileUploadingQueue({int fileAddLimit = 30, int concurrentUploadingLimit = 3})
+      : _fileAddLimit = fileAddLimit,
+        _concurrentUploadingLimit = concurrentUploadingLimit;
+
   Stream<bool> empty() {}
   Stream<bool> uploading() {}
   Stream<UploadingState> uploadingState() {}
