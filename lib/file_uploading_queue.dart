@@ -70,9 +70,9 @@ class FileUploadingQueue extends PropertyChangeNotifier<String> {
     if (_uploadingFuture == null) runUploading();
   }
 
-  Future<void> delete(int hashCode) async {
-    _queue.removeWhere(
-        (UploadingProcess process) => process.hashCode == hashCode);
+  Future<void> delete(int index) async {
+    var el = _queue.elementAt(index);
+    _queue.remove(el);
     notifyListeners();
   }
 
