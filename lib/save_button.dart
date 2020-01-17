@@ -9,7 +9,7 @@ class SaveButton extends StatelessWidget {
         builder: (context, model, properties) {
       return FlatButton(
         child: Text('Сохранить'),
-        onPressed: model.empty && model.uploading ? null : model.save,
+        onPressed: model.empty || model.uploading ? null : model.save,
       );
     });
   }
