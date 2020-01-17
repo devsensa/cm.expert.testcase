@@ -9,10 +9,13 @@ class AddButton extends StatelessWidget {
     return PropertyChangeConsumer<FileUploadingQueue>(
         builder: (context, model, properties) {
       var addAction = () => model.add("${faker.lorem.word()}.txt");
-      return FloatingActionButton(
-        onPressed: model.canAddFile ? addAction : null,
-        tooltip: 'Add file',
-        child: Icon(Icons.add),
+      return Visibility(
+        visible: model.canAddFile,
+        child: FloatingActionButton(
+              onPressed: addAction,
+              tooltip: 'Add file',
+              child: Icon(Icons.add),
+            )
       );
     });
   }
