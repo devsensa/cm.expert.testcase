@@ -3,7 +3,7 @@ import 'package:property_change_notifier/property_change_notifier.dart';
 
 import './file_uploading_queue.dart';
 
-class SaveButton {
+class SaveButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return PropertyChangeConsumer<FileUploadingQueue>(
         builder: (context, model, properties) {
