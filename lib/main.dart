@@ -1,22 +1,26 @@
 import "package:flutter/material.dart";
+import "package:property_change_notifier/property_change_notifier.dart";
 
+import "./file_uploading_queue.dart";
+import "./file_uploader.dart";
 import "./file_uploader_screen.dart";
+import "./cancel_button.dart";
+import "./save_button.dart";
+import "./files_subtitle.dart";
 
 void main() => runApp(MyApp());
-
-// TODO Мега костыль, от которого очевидно следует избавиться в первую очередь
-// Переменная для обмена данными между экранами
-List<String> superMegaGlobalFileList = [];
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Тестовое задание',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
+    return PropertyChangeProvider(
+      value: FileUploadingQueue(FileUploader()),
+      child: MaterialApp(
+          title: 'Тестовое задание',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: MyHomePage()),
     );
   }
 }
@@ -27,8 +31,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _hasFiles = false;
-
   void _navToFileUploadScreen() async {
     await Navigator.push(
       context,
@@ -36,18 +38,6 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (BuildContext screenContext) => FileUploaderScreen(),
       ),
     );
-    _updateState();
-  }
-
-  void _clearFiles() {
-    superMegaGlobalFileList = [];
-    _updateState();
-  }
-
-  void _updateState() {
-    setState(() {
-      _hasFiles = superMegaGlobalFileList.isNotEmpty;
-    });
   }
 
   @override
@@ -60,35 +50,16 @@ class _MyHomePageState extends State<MyHomePage> {
           child: ListTile(
             title: Text("Файлы"),
             trailing: Icon(Icons.arrow_forward_ios),
-            subtitle: _buildFileSubtitle(),
+            subtitle: FilesSubtitle(),
             onTap: _navToFileUploadScreen,
           ),
         ),
         bottomNavigationBar: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            FlatButton(
-              child: Text('Сбросить'),
-              onPressed: _hasFiles ? _clearFiles : null,
-            ),
-            FlatButton(
-              child: Text('Сохранить'),
-              onPressed: _hasFiles ? () {} : null,
-            )
+            CancelButton(),
+            SaveButton(),
           ],
         ));
-  }
-
-  Text _buildFileSubtitle() {
-    if (!_hasFiles) {
-      return Text("Нет файлов");
-    }
-    // TODO Раскоментировать и реализовать очередь
-    // if (fileUploader.isUploading) {
-    //   final queueLen = fileUploader.queue.length;
-    //   final total = fileUploader.files.length + queueLen;
-    //   return Text("Осталось загрузить: $queueLen. Всего файлов: $total");
-    // }
-    return Text("Кол-во файлов: ${superMegaGlobalFileList.length} ");
   }
 }
