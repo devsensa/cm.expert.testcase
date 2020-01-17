@@ -7,10 +7,11 @@ class FilesSubtitle extends StatelessWidget {
     return PropertyChangeConsumer<FileUploadingQueue>(
         builder: (context, model, properties) {
       var displayText = "";
-      if (model.empty) displayText = "Нет файлов";
-      model.lengthOfProcessing == 0
+      displayText = model.lengthOfProcessing == 0
           ? "Кол-во файлов: ${model.length}"
           : "Осталось загрузить: ${model.lengthOfProcessing}. Всего файлов: ${model.length}";
+
+      if (model.empty) displayText = "Нет файлов";
       return Text(displayText);
     });
   }
