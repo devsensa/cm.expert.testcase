@@ -4,7 +4,8 @@ import "./file_uploading_queue.dart";
 
 class FilesSubtitle extends StatelessWidget {
   Widget build(BuildContext context) {
-    return PropertyChangeConsumer(builder: (context, model, properties) {
+    return PropertyChangeConsumer<FileUploadingQueue>(
+        builder: (context, model, properties) {
       var displayText = "";
       if (model.empty) displayText = "Нет файлов";
       model.lengthOfProcessing == 0
