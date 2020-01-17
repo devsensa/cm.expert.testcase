@@ -25,23 +25,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
 
-class _MyHomePageState extends State<MyHomePage> {
-  void _navToFileUploadScreen() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext screenContext) => FileUploaderScreen(),
-      ),
-    );
-  }
 
+class MyHomePage extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
+    var navToFileUpload = () async {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext screenContext) => FileUploaderScreen(),
+        ),
+      );
+    };
     return Scaffold(
         appBar: AppBar(
           title: Text('Home page'),
@@ -51,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text("Файлы"),
             trailing: Icon(Icons.arrow_forward_ios),
             subtitle: FilesSubtitle(),
-            onTap: _navToFileUploadScreen,
+            onTap: navToFileUpload,
           ),
         ),
         bottomNavigationBar: Row(
