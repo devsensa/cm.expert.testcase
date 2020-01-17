@@ -32,6 +32,12 @@ class FileUploadingQueue extends PropertyChangeNotifier<String> {
   bool get empty => _queue.isEmpty;
   bool get uploading => _queue.any(
       (UploadingProcess process) => process.status != FileLifecycle.uploaded);
+  int get length => _queue.length;
+  int get lengthOfProcessing => _queue
+      .where((UploadingProcess process) =>
+          process.status != FileLifecycle.uploaded)
+      .length;
+
   UploadingState get uploadingState {
     var allFiles = _queue.length;
     var inProcess = _queue
