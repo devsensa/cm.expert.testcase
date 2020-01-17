@@ -28,4 +28,8 @@ class UploadingProcess {
     _file = file;
     _processStatus = FileLifecycle.uploaded;
   }
+
+  String toString() {
+    return "UploadingProcess {file: $_fileName, status: ${_processStatus.toString()}}";
+  }
 }
