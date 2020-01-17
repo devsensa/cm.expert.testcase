@@ -53,7 +53,6 @@ class FileUploadingQueue extends PropertyChangeNotifier<String> {
 /* ------------------------------- Operations ------------------------------- */
 
   Future<void> cancel() async {
-    var shouldNotify = _queue.length > 0;
     _queue.clear();
     notifyListeners();
   }
@@ -102,6 +101,7 @@ class FileUploadingQueue extends PropertyChangeNotifier<String> {
         _uploader.fetch(nextProcesses).then((List<UploadingProcess> processes) {
       notifyListeners();
       runUploading();
+      return;
     });
   }
 }
